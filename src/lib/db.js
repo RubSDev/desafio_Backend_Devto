@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const DB_USER = "****";
-const DB_PASSWORD = "****";
+const DB_USER = "*****";
+const DB_PASSWORD = "*****";
 const DB_HOST = "cluster0.kg3lw.mongodb.net";
 const DB_NAME = "devto";
 const URL = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`;

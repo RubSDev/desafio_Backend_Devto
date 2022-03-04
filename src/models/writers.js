@@ -24,7 +24,7 @@ const writerSchema = new mongoose.Schema({
   },
   dateCreated: {
     type: Date,
-    required: true,
+    default: Date.now,
   },
   biography: {
     type: String,
