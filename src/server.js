@@ -7,6 +7,7 @@ const writerRouter = require("./routers/writers");
 const server = express();
 
 //middlewares
+server.use(express.json())
 
 //rourters
 server.use("/posts", postRouter);
