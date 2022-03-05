@@ -33,6 +33,10 @@ const writerSchema = new mongoose.Schema({
     maxlength: 300,
     trim: true,
   },
+  post: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "posts",
+  },
 });
 
 const model = mongoose.model("writers", writerSchema);
