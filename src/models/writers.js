@@ -37,8 +37,16 @@ const writerSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "posts",
   },
+  email: {
+    type: String,
+    required: true,
+    match: /.+@.+\..+/,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
 });
 
 const model = mongoose.model("writers", writerSchema);
-
 module.exports = model;
