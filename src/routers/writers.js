@@ -113,6 +113,5 @@ router.delete("/:id", async (request, response) => {
     });
   }
 });
-router.get("/");
 
 module.exports = router;
