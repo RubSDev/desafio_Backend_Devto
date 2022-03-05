@@ -29,7 +29,7 @@ router.get("/", async (request, response) => {
 router.get("/:id", async (request, response) => {
   try {
     const idPost = request.params.id;
-    const postFound = await useCasesPost.getById(idPost);
+    const postFound = await useCasesPost.getPostById(idPost);
 
     response.json({
       success: true,
@@ -74,7 +74,7 @@ router.patch("/:id", async (request, response) => {
   try {
     const idPost = request.params.id;
     const dataToUpdate = request.body;
-    const postUpdate = await useCasesPost.patchById(idPost, dataToUpdate, {
+    const postUpdate = await useCasesPost.patchPostById(idPost, dataToUpdate, {
       new: true,
     });
 
@@ -98,7 +98,7 @@ router.patch("/:id", async (request, response) => {
 router.delete("/:id", async (request, response) => {
   try {
     const idPost = request.params.id;
-    const postDelete = await useCasesPost.deleteById(idPost);
+    const postDelete = await useCasesPost.deletePostById(idPost);
 
     response.json({
       success: true,
