@@ -24,7 +24,9 @@ router.get("/", async (request, response) => {
     });
   }
 });
+
 router.use(auth);
+
 router.get("/:id", async (request, response) => {
   try {
     const idWriter = request.params.id;
