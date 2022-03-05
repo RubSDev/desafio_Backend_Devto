@@ -1,5 +1,6 @@
 //const { request } = require("express");
 const express = require("express");
+const auth = require("../middlewares/auth");
 
 const router = express.Router();
 
@@ -26,18 +27,24 @@ router.get("/", async (request, response) => {
   }
 });
 
+router.use(auth);
 router.get("/:id", async (request, response) => {
   try {
     const idPost = request.params.id;
-    const postFound = await useCasesPost.getById(idPost);
+    const token = request.headers;
+    if (token) {
+      const postFound = await useCasesPost.getById(idPost);
 
-    response.json({
-      success: true,
-      message: "Post found",
-      data: {
-        post: postFound,
-      },
-    });
+      response.json({
+        success: true,
+        message: "Post found",
+        data: {
+          post: postFound,
+        },
+      });
+      return;
+    }
+
     if (!postFound) throw new Error("Post not found");
   } catch (error) {
     response.status(404);
@@ -52,15 +59,18 @@ router.get("/:id", async (request, response) => {
 router.post("/", async (request, response) => {
   try {
     const dataPost = request.body;
-    const newPost = await useCasesPost.createPost(dataPost);
-
-    response.json({
-      success: true,
-      message: "Post created",
-      data: {
-        post: newPost,
-      },
-    });
+    const token = request.headers;
+    if (token) {
+      const newPost = await useCasesPost.createPost(dataPost);
+      response.json({
+        success: true,
+        message: "Post created",
+        data: {
+          post: newPost,
+        },
+      });
+      return;
+    }
   } catch (error) {
     response.json({
       success: false,
@@ -74,17 +84,21 @@ router.patch("/:id", async (request, response) => {
   try {
     const idPost = request.params.id;
     const dataToUpdate = request.body;
-    const postUpdate = await useCasesPost.patchById(idPost, dataToUpdate, {
-      new: true,
-    });
+    const token = request.headers;
+    if (token) {
+      const postUpdate = await useCasesPost.patchById(idPost, dataToUpdate, {
+        new: true,
+      });
 
-    response.json({
-      success: true,
-      message: "Post",
-      data: {
-        post: postUpdate,
-      },
-    });
+      response.json({
+        success: true,
+        message: "Post",
+        data: {
+          post: postUpdate,
+        },
+      });
+      return;
+    }
   } catch (error) {
     response.status(404);
     response.json({
@@ -98,15 +112,19 @@ router.patch("/:id", async (request, response) => {
 router.delete("/:id", async (request, response) => {
   try {
     const idPost = request.params.id;
-    const postDelete = await useCasesPost.deleteById(idPost);
+    const token = request.headers;
+    if (token) {
+      const postDelete = await useCasesPost.deleteById(idPost);
 
-    response.json({
-      success: true,
-      message: "Post deleted",
-      data: {
-        post: postDelete,
-      },
-    });
+      response.json({
+        success: true,
+        message: "Post deleted",
+        data: {
+          post: postDelete,
+        },
+      });
+      return;
+    }
     if (!postFound) throw new Error("Post not found");
   } catch (error) {
     response.status(404);

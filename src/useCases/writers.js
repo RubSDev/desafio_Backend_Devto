@@ -20,13 +20,29 @@ function deleteById(idWriter) {
 }
 
 async function signUp(dataWriter) {
-  const { email, password, name } = dataWriter;
+  const {
+    email,
+    password,
+    name,
+    lastName,
+    biography,
+    nationality,
+    dateCreated,
+  } = dataWriter;
   const writerFound = await Writer.findOne({ email });
 
   if (writerFound) throw new Error("Writer already exists");
   const passwordEncrypted = await bcrypt.hash(password);
 
-  return Writer.create({ name, email, password: passwordEncrypted });
+  return Writer.create({
+    name,
+    email,
+    password: passwordEncrypted,
+    lastName,
+    biography,
+    nationality,
+    dateCreated,
+  });
 }
 
 async function login(email, password) {

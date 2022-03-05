@@ -1,11 +1,12 @@
+const { default: mongoose } = require("mongoose");
 const Post = require("../models/posts");
 
 function getAllPost() {
   return Post.find({});
 }
 function createPost(dataPost) {
-  const { title, tags, content, writer, date } = dataPost;
-  return Post.create({ title, tags, content, writer, date });
+  const { title, tags, content } = dataPost;
+  return Post.create({ title, tags, content });
 }
 function getPostById(idPost) {
   return Post.findById(idPost);

@@ -1,6 +1,8 @@
 const express = require("express");
-const router = express.Router();
 const useCasesWriter = require("../useCases/writers");
+const auth = require("../middlewares/auth");
+
+const router = express.Router();
 
 router.get("/", async (request, response) => {
   try {
@@ -22,18 +24,23 @@ router.get("/", async (request, response) => {
     });
   }
 });
+router.use(auth);
 router.get("/:id", async (request, response) => {
   try {
     const idWriter = request.params.id;
-    const writerFound = await useCasesWriter.getById(idWriter);
+    const token = request.headers;
+    if (token) {
+      const writerFound = await useCasesWriter.getById(idWriter);
 
-    response.json({
-      success: true,
-      message: "Writer found",
-      data: {
-        writer: writerFound,
-      },
-    });
+      response.json({
+        success: true,
+        message: "Writer found",
+        data: {
+          writer: writerFound,
+        },
+      });
+      return;
+    }
     if (!writerFound) throw new Error("Writer not found");
   } catch (error) {
     response.status(404);
@@ -47,15 +54,18 @@ router.get("/:id", async (request, response) => {
 router.post("/", async (request, response) => {
   try {
     const dataWriter = request.body;
-    const newWriter = await useCasesWriter.createWriter(dataWriter);
+    const token = request.headers;
+    if (token) {
+      const newWriter = await useCasesWriter.createWriter(dataWriter);
 
-    response.json({
-      success: true,
-      message: "Writer created",
-      data: {
-        writer: newWriter,
-      },
-    });
+      response.json({
+        success: true,
+        message: "Writer created",
+        data: {
+          writer: newWriter,
+        },
+      });
+    }
   } catch (error) {
     response.json({
       success: false,
@@ -68,19 +78,23 @@ router.patch("/:id", async (request, response) => {
   try {
     const idWriter = request.params.id;
     const dataToUpdate = request.body;
-    const writerUpdate = await useCasesWriter.patchById(
-      idWriter,
-      dataToUpdate,
-      { new: true }
-    );
+    const token = request.headers;
+    if (token) {
+      const writerUpdate = await useCasesWriter.patchById(
+        idWriter,
+        dataToUpdate,
+        { new: true }
+      );
 
-    response.json({
-      success: true,
-      message: "Writer",
-      data: {
-        writer: writerUpdate,
-      },
-    });
+      response.json({
+        success: true,
+        message: "Writer",
+        data: {
+          writer: writerUpdate,
+        },
+      });
+      return;
+    }
   } catch (error) {
     response.status(404);
     response.json({
@@ -93,15 +107,20 @@ router.patch("/:id", async (request, response) => {
 router.delete("/:id", async (request, response) => {
   try {
     const idWriter = request.params.id;
-    const writerDelete = await useCasesWriter.deleteById(idWriter);
+    const token = request.headers;
+    if (token) {
+      const writerDelete = await useCasesWriter.deleteById(idWriter);
 
-    response.json({
-      success: true,
-      message: "Writer deleted",
-      data: {
-        writer: writerDelete,
-      },
-    });
+      response.json({
+        success: true,
+        message: "Writer deleted",
+        data: {
+          writer: writerDelete,
+        },
+      });
+      return;
+    }
+
     if (!writerFound) throw new Error("Writer not found");
   } catch (error) {
     response.status(404);
