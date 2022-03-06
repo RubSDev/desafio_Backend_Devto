@@ -24,6 +24,48 @@ router.get("/", async (request, response) => {
     });
   }
 });
+router.post("/signup", async (request, response) => {
+  try {
+    const writerData = request.body;
+    const writerCreated = await useCasesWriter.signUp(writerData);
+
+    response.json({
+      success: true,
+      message: "Writer created",
+      data: {
+        writer: writerCreated,
+      },
+    });
+  } catch (error) {
+    response.status(400);
+    response.json({
+      success: false,
+      message: " could not register",
+      error: error.message,
+    });
+  }
+});
+router.post("/login", async (request, response) => {
+  try {
+    const { email, password } = request.body;
+    const token = await useCasesWriter.login(email, password);
+
+    response.json({
+      success: true,
+      message: " writer logged in",
+      data: {
+        token,
+      },
+    });
+  } catch (error) {
+    response.status(400);
+    response.json({
+      success: false,
+      message: " could not register",
+      error: error.message,
+    });
+  }
+});
 
 router.use(auth);
 
@@ -133,47 +175,5 @@ router.delete("/:id", async (request, response) => {
     });
   }
 });
-router.post("/signup", async (request, response) => {
-  try {
-    const writerData = request.body;
-    const writerCreated = await useCasesWriter.signUp(writerData);
 
-    response.json({
-      success: true,
-      message: "Writer created",
-      data: {
-        writer: writerCreated,
-      },
-    });
-  } catch (error) {
-    response.status(400);
-    response.json({
-      success: false,
-      message: " could not register",
-      error: error.message,
-    });
-  }
-});
-
-router.post("/login", async (request, response) => {
-  try {
-    const { email, password } = request.body;
-    const token = await useCasesWriter.login(email, password);
-
-    response.json({
-      success: true,
-      message: " writer logged in",
-      data: {
-        token,
-      },
-    });
-  } catch (error) {
-    response.status(400);
-    response.json({
-      success: false,
-      message: " could not register",
-      error: error.message,
-    });
-  }
-});
 module.exports = router;

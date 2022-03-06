@@ -6,8 +6,8 @@ function getAllWriters() {
   return Writer.find({});
 }
 function createWriter(dataWriter) {
-  const { name, lastName, nationality, dateCreated, biography } = dataWriter;
-  return Writer.create({ name, lastName, nationality, dateCreated, biography });
+  const { name, lastName, nationality, biography } = dataWriter;
+  return Writer.create({ name, lastName, nationality, biography });
 }
 function getById(idWriter) {
   return Writer.findById(idWriter);
@@ -16,7 +16,7 @@ function patchById(idWriter, dataToUpdate) {
   return Writer.findByIdAndUpdate(idWriter, dataToUpdate, { new: true });
 }
 function deleteById(idWriter) {
-  return Writer.findById(idWriter);
+  return Writer.findByIdAndDelete(idWriter);
 }
 
 async function signUp(dataWriter) {

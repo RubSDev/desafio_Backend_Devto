@@ -15,7 +15,7 @@ function patchPostById(idPost, dataToUpdate) {
   return Post.findByIdAndUpdate(idPost, dataToUpdate, { new: true });
 }
 function deletePostById(idPost) {
-  return Post.findById(idPost);
+  return Post.findByIdAndDelete(idPost);
 }
 
 module.exports = {

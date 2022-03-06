@@ -33,7 +33,7 @@ router.get("/:id", async (request, response) => {
     const idPost = request.params.id;
     const token = request.headers;
     if (token) {
-      const postFound = await useCasesPost.getById(idPost);
+      const postFound = await useCasesPost.getPostById(idPost);
 
       response.json({
         success: true,
@@ -86,9 +86,13 @@ router.patch("/:id", async (request, response) => {
     const dataToUpdate = request.body;
     const token = request.headers;
     if (token) {
-      const postUpdate = await useCasesPost.patchById(idPost, dataToUpdate, {
-        new: true,
-      });
+      const postUpdate = await useCasesPost.patchPostById(
+        idPost,
+        dataToUpdate,
+        {
+          new: true,
+        }
+      );
 
       response.json({
         success: true,
@@ -114,7 +118,7 @@ router.delete("/:id", async (request, response) => {
     const idPost = request.params.id;
     const token = request.headers;
     if (token) {
-      const postDelete = await useCasesPost.deleteById(idPost);
+      const postDelete = await useCasesPost.deletePostById(idPost);
 
       response.json({
         success: true,
