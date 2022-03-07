@@ -22,10 +22,7 @@ const postSchema = new mongoose.Schema(
       minlength: 3,
       trim: true,
     },
-    //writer: [{body:"string", by: mongoose.Schema.Types.ObjectId}],
     writer: { type: mongoose.Schema.Types.ObjectId, ref: "writers" },
-
-    //revisar como se agrega la fecha
   },
   {
     timestamps: true,

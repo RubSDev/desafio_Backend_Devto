@@ -20,15 +20,8 @@ function deleteById(idWriter) {
 }
 
 async function signUp(dataWriter) {
-  const {
-    email,
-    password,
-    name,
-    lastName,
-    biography,
-    nationality,
-    dateCreated,
-  } = dataWriter;
+  const { email, password, name, lastName, biography, nationality } =
+    dataWriter;
   const writerFound = await Writer.findOne({ email });
 
   if (writerFound) throw new Error("Writer already exists");
@@ -41,7 +34,6 @@ async function signUp(dataWriter) {
     lastName,
     biography,
     nationality,
-    dateCreated,
   });
 }
 

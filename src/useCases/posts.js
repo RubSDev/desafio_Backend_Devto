@@ -4,9 +4,9 @@ const Post = require("../models/posts");
 function getAllPost() {
   return Post.find({});
 }
-function createPost(dataPost) {
+function createPost(dataPost, userId) {
   const { title, tags, content } = dataPost;
-  return Post.create({ title, tags, content });
+  return Post.create({ title, tags, content, writer: userId });
 }
 function getPostById(idPost) {
   return Post.findById(idPost);
