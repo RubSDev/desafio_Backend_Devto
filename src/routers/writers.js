@@ -26,6 +26,7 @@ router.get("/", async (request, response) => {
 });
 router.post("/signup", async (request, response) => {
   try {
+    console.log(request.body)
     const writerData = request.body;
     const writerCreated = await useCasesWriter.signUp(writerData);
 
