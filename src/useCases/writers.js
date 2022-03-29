@@ -6,8 +6,16 @@ function getAllWriters() {
   return Writer.find({});
 }
 function createWriter(dataWriter) {
-  const { name, lastName, nationality, biography, email, password } = dataWriter;
-  return Writer.create({ name, lastName, nationality, biography, email, password });
+  const { name, lastName, nationality, biography, email, password } =
+    dataWriter;
+  return Writer.create({
+    name,
+    lastName,
+    nationality,
+    biography,
+    email,
+    password,
+  });
 }
 function getById(idWriter) {
   return Writer.findById(idWriter);
@@ -25,8 +33,8 @@ async function signUp(dataWriter) {
   const writerFound = await Writer.findOne({ email });
 
   if (writerFound) throw new Error("Writer already exists");
-  console.log(password)
-  console.log(dataWriter)
+  console.log(password);
+  console.log(dataWriter);
   const passwordEncrypted = await bcrypt.hash(password);
 
   return Writer.create({
