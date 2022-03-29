@@ -2,11 +2,13 @@ const { default: mongoose } = require("mongoose");
 const Post = require("../models/posts");
 
 function getAllPost() {
-  return Post.find({}).populate("writer", { name: 1, lastName: 1 });
+  return Post.find({})
+    .populate("writer", { name: 1, lastName: 1 })
+    .sort({ createdAt: "desc" });
 }
 function createPost(dataPost, userId) {
-  const { title, tags, content } = dataPost;
-  return Post.create({ title, tags, content, writer: userId });
+  const { title, tags, content, image } = dataPost;
+  return Post.create({ title, tags, content, image, writer: userId });
 }
 function getPostById(idPost) {
   return Post.findById(idPost).populate("writer", { name: 1, lastName: 1 });

@@ -29,12 +29,11 @@ router.get("/", async (request, response) => {
   }
 });
 
-router.use(auth);
 router.get("/:id", async (request, response) => {
   try {
     const idPost = request.params.id;
     const postFound = await useCasesPost.getPostById(idPost);
-
+    if (!postFound) throw new Error("Post not found");
     response.json({
       success: true,
       message: "Post found",
@@ -42,8 +41,6 @@ router.get("/:id", async (request, response) => {
         post: postFound,
       },
     });
-
-    if (!postFound) throw new Error("Post not found");
   } catch (error) {
     response.status(404);
     response.json({
@@ -53,7 +50,7 @@ router.get("/:id", async (request, response) => {
     });
   }
 });
-
+router.use(auth);
 router.post("/", async (request, response) => {
   try {
     const dataPost = request.body;
@@ -108,7 +105,7 @@ router.delete("/:id", async (request, response) => {
   try {
     const idPost = request.params.id;
     const postDelete = await useCasesPost.deletePostById(idPost);
-
+    if (!postDelete) throw new Error("Post not found");
     response.json({
       success: true,
       message: "Post deleted",
@@ -116,8 +113,6 @@ router.delete("/:id", async (request, response) => {
         post: postDelete,
       },
     });
-
-    if (!postFound) throw new Error("Post not found");
   } catch (error) {
     response.status(404);
     response.json({
